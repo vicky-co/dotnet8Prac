@@ -1,26 +1,39 @@
 ﻿@model List<Category>
 
-    <h1>List of categories</h1>
-    <table class="table-bordered table ">
-       <thead>
-           <th>
-               Name
-           </th>
-           <th>
-               Display Order
-           </th>
-       </thead>
-       <tbody>
-        @foreach (var item in Model)
+    <div class="row">
+        <div class="col-6">
+            <h1>List of categories</h1>   
+        </div>
+        <div class="col-6">
+             <a type="button" asp-action="Create"  class="btn btn-success float-end w-75"><i class="bi bi-plus-circle-dotted"></i> Add Category</a>
+        </div>
+    </div>
+    <table class="table-bordered table table-striped">
+    <thead>
+        <tr>
+            <th scope="col" class="text-center">Name</th>
+            <th scope="col" class="text-center">Display Order</th>
+            <th scope="col" class="text-center">Actions</th>
+        </tr>
+    </thead>  
+    <tbody>
+        @foreach (var item in Model.OrderBy(u => u.Name))
         {
-            <tr>
-                <td>
-                    @item.Name
-                </td>
-                <td>
-                    @item.DisplayOrder
+            <tr class="table-active">
+                    <td scope="row" class="text-center"> @item.Name</td>
+                <td class="text-center"> @item.DisplayOrder</td>
+                <td class="text-center">
+                    <div class="row">
+                        <div class="col-6">
+                            <a type="button" asp-controller="Category" asp-action="Edit" asp-route-catId="@item.Id" class="btn btn-info w-100"><i class="bi bi-pencil-fill"></i> Edit</a>
+                        </div>             
+                        <div class="col-6">
+                            <a type="button" asp-controller="Category" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger w-100"><i class="bi bi-trash-fill"></i> Delete</a>
+                        </div>
+                    </div>
                 </td>
             </tr>
-        }
-       </tbody>
+        } 
+    </tbody>
 </table>
+
